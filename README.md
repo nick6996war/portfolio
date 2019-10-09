@@ -1,6 +1,6 @@
-# portfoli
+# Portfolio
 
-OLX parser 
+# OLX parser 
 The OLX parser was created specifically for receiving cadastral numbers from advertisemeThe OLX parser was created specifically for receiving cadastral numbers from advertisements written in NODE.JS. Also, with a little refinement, it is possible to get anything from the OLX
 
 PRINCIPLE OF OPERATION        
