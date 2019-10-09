@@ -6,7 +6,7 @@ var fs = require('fs')
 let separator = '#|#'
 let regex = /\d{10}/gm
 var URL = 'http://google.com'
-let urlMas = fs.readFileSync('log2.txt', 'utf8').split(separator)
+let urlMas = fs.readFileSync('log.txt', 'utf8').split(separator)
 
 // we get results if the code suddenly exited 
 var results = []
