@@ -5,7 +5,7 @@ let fs = require('fs')
 
 let separator ='#|#'//that would definitely not be repeated in the link
 
-let writeStream = fs.createWriteStream("log2.txt")
+let writeStream = fs.createWriteStream("log.txt")
 for (let num = 2;num<500;num++){  //from the second page by the fact that on the first page you need to change the URL
 let URL = 'https://www.olx.ua/uk/list/q-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F/?page='+num
 let streamParse = 10
