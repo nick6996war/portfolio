@@ -1,0 +1,315 @@
+<input type="hidden" name="landing" id="landing" value="{{ content['alias'] }}">
+<script async src="/lib/phone/1.0.1/js/intlTelInput.js"></script>
+<script src="/lib/pnotify/3.2.0/js/pnotify.min.js"></script>
+<link href="/lib/pnotify/3.2.0/css/pnotify.min.css" rel="stylesheet">
+<link href="/lib/phone/1.0.1/css/intlTelInput.css" rel="stylesheet">
+<style>.hide {display: none !important;}</style>
+<script src="/templates/{{ content['template'] }}/js/page.min.js"></script>
+<script src="/js/notify.js"></script>
+<script src="/js/new-app.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<script>
+$(document).ready(async function() {
+let ret
+// Общение App c localStorage, sessionStorage
+function run() {
+if (readCookie('cart') || readCookie('cart') == 0) removeDb('cart')
+return ret
+}
+await run()
+})
+$(document).ready(async function() {
+	languages = await getLanguages('{{ language_id }}')
+	language = await languages.language
+})
+</script>
+{% if user['club']['state'] == 1 %}
+<script>
+let router_get_cart = 'get/cart'
+let router_cart = 'cart/'
+let router_order = 'order'
+</script>
+{% endif %}
+{% if user['club']['state'] == 1 %}
+<script>
+function getCart() {
+$.get(router_get_cart, function (data) {
+if (data && data.cart) {
+//$("#cart").html(data)
+if (data.cart) setDb('cart', JSON.stringify(data.cart))
+}
+})
+}
+
+function putCart() {
+$.get(router_get_cart, function (data) {
+let cart
+if (data) {
+cart = data.cart
+// for(i=0; i < data.length; i++) {}
+if (cart) {
+cart.forEach(function(item, i, cart) {
+if (item.state == 'add') item.splice(i, 1)
+})
+setDb('cart', JSON.stringify(cart))
+}
+}
+})
+}
+
+function getCartLanding() {
+var landing = $("#landing").val()
+$.get(router_get + router_cart + 'get?landing=' + landing, function (data) {
+if (data) $("#cart").html(data)
+})
+}
+
+function cart(id, metod) {
+let csrf = $('#csrf').val()
+let num = $('#num-'+id).val()
+let price = $('#price-'+id).val()
+let currency_id = $('#currency_id-'+id).val()
+$.post(router_post+router_cart, {csrf, metod, id, num, price, currency_id}, function (data) {
+if (data && data.status == 200) {
+console.log(data)
+if (data.render) $("#cart_button-"+id).html(data.render)
+if (data.cart) $("#cart").html(data.cart)
+getCart()
+}
+else window.location.reload()
+})
+}
+
+function newOrder() {
+var csrf = $("#csrf").val()
+$.post(router_post+router_order, {csrf}, function (data) {
+console.log(data)
+if (data && data.status == 200) {
+//$("#cart").html(data.cart)
+putCart()
+if (data.location) window.location.href = data.location
+else window.location.reload()
+}
+else window.location.reload()
+//$.notify(data.text, {autoHideDelay: 2000, arrowShow: true, arrowSize: 6, gap: 2})
+})
+}
+
+function newOrders() {
+//$('.error_message').remove()
+checkData('iname', lang(58), check_expression)
+checkData('fname', lang(57), check_expression)
+checkData('city', lang(160), check_expression)
+checkData('np', '№НП', check_expression)
+checkData('tel', lang(486), phone_expression)
+//checkEmail('email', lang(161), false)
+var csrf = $("#csrf").val()
+var iname = $("#iname").val()
+var fname = $("#fname").val()
+var city = $("#city").val()
+var np = $("#np").val()
+var tel = $("#tel").val()
+//var tel = $("#tel").intlTelInput("getNumber");
+var email = $("#email").val()
+$.post(router_post + router_cart + 'new-order', {csrf: csrf, iname: iname, fname: fname, city: city, np: np, tel: tel, email: email}, function (data) {
+if (data && data.status == 200) $("#cart").html(data.cart)
+else {
+$.notify(data.text, {
+// whether to hide the notification on click
+//clickToHide: true,
+// whether to auto-hide the notification
+//autoHide: true,
+// if autoHide, hide after milliseconds
+autoHideDelay: 2000,
+// show the arrow pointing at the element
+arrowShow: true,
+// arrow size in pixels
+arrowSize: 6,
+// position defines the notification position though uses the defaults below
+// position: '...',
+// default positions
+//elementPosition: 'top right',
+//globalPosition: 'bottom center',
+// default style
+//style: 'bootstrap',
+// default class (string or [string])
+//className: 'error',
+// show animation
+//showAnimation: 'slideDown',
+// show animation duration
+//showDuration: 400,
+// hide animation
+//hideAnimation: 'slideUp',
+// hide animation duration
+//hideDuration: 200,
+// padding between element and notification
+gap: 2
+})
+}
+})
+}
+
+function productCartNum(obj) {
+var id = obj.id
+var data = id.split('-')
+var item_id = data[1]
+var field = data[2]
+var num = $(obj).val()
+var landing = $("#landing").val()
+var csrf = $("#csrf").val()
+$.post(router_post + router_cart + 'product-cart-num', {csrf, landing, item_id, field, num}, function (data) {
+if (data.status == 200) {
+$(obj).css({'border': '1px solid green', 'background-color': 'lightgreen'})
+//$.notify(data.text, data.color, {style: 'happyblue'})
+getCart()
+}
+// else if(data.status == 400) $.notify(data.text, data.color, {style: 'happyblue'})
+else $(obj).css({'border': '1px solid red', 'background-color': 'lightred'})
+})
+return false
+}
+</script>
+{% endif %}
+{% if config['google']['api_key'] %}
+<script>
+$(function() {
+page.config({
+googleApiKey: '{{ config['google']['api_key'] }}', // https://developers.google.com/maps/documentation/javascript/get-api-key
+googleAnalyticsId: '{{ config['google']['analytics']['async'] }}',
+reCaptchaSiteKey:  '{{ config['re_captcha']['site_key'] }}', // See available languages: https://developers.google.com/recaptcha/docs/language
+reCaptchaLanguage: '{{ config['re_captcha']['language'] }}',
+disableAOSonMobile: true,
+smoothScroll: true,
+})
+})
+</script>
+{% endif %}
+<script>
+$('.slider').slick({
+dots: true,
+infinite: true,
+speed: 500,
+fade: true,
+cssEase: 'linear'
+})
+</script>
+{% if config['google']['analytics']['async'] %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config['google']['analytics']['async'] }}"></script>
+<script>
+window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', '{{ config['google']['analytics']['async'] }}')
+</script>
+{% endif %}
+{% if config['fb']['pixel_id'] %}
+<script>
+window.fbAsyncInit = function() {
+FB.init({
+appId : '{{ config['fb']['pixel_id'] }}',
+xfbml : true,
+version : 'v2.9'
+})
+FB.AppEvents.logPageView()
+}
+(function(d, s, id){
+let js, fjs = d.getElementsByTagName(s)[0]
+if (d.getElementById(id)) {return}
+js = d.createElement(s); js.id = id
+js.src = "https://connect.facebook.net/ru_RU/sdk.js"
+fjs.parentNode.insertBefore(js, fjs)
+} (document, 'script', 'facebook-jssdk'))
+</script>
+{% endif %}
+{% if authorize != 1 and config['google']['oauth_id']%}
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+function google_auth() {
+gapi.load('auth2', function() {
+let googleUser = {}
+GoogleAuth = gapi.auth2.init({client_id: '{{ config['google']['oauth_id'] }}'})
+GoogleAuth.signIn().then(function() {
+googleUser = GoogleAuth.currentUser.get()
+let csrf = $("#csrf").val()
+let token = googleUser.getAuthResponse().id_token
+let oauth = 'google'
+console.log('token: ' + token)
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function(data) {
+console.log('data: ' + data.status)
+if (data.status == 200) {
+if (data.location) window.location.href = data.location
+else window.location.href = '/'
+}
+})
+})
+})
+}
+
+function googleAuthTest() {
+GoogleAuth = gapi.auth2.init({client_id: '{{ config['google']['oauth_id'] }}'})
+let googleUser
+let token
+if (GoogleAuth && GoogleAuth.getAuthInstance().currentUser.get().getId()) {
+//console.log('id_token 3 '+gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token)
+googleUser = gapi.auth2.getAuthInstance().currentUser.get()
+token = googleUser.getAuthResponse().id_token
+console.log('id_token googleAuthTest '+token)
+}
+}
+</script>
+{% endif %}
+{% if authorize != 1 and config['fb']['app_id'] %}
+<script>
+function fb_auth() {
+FB.login(function(response) {
+if (response.authResponse) {
+let csrf = $("#csrf").val()
+let token = response.authResponse.accessToken
+console.log('token: ' + token)
+let oauth = 'facebook'
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function (data) {
+//console.log('data: ' + data.status)
+if (data.status == 200) {
+if (data.location) window.location.href = data.location
+else window.location.href = '/'
+}
+})
+}
+else console.log('User cancelled login or did not fully authorize.')
+}, {scope: 'email'} )
+}
+</script>
+{% endif %}
+{% if config['fb']['app_id'] and config['fb']['app_id'] %}
+<script>
+window.fbAsyncInit = function() {
+FB.init({
+appId      : '{{ config['fb']['app_id'] }}',
+cookie     : true,  // enable cookies to allow the server to access
+xfbml      : true,  // parse social plugins on this page
+version    : '{{ config['fb']['graph_version'] }}' // use graph api version
+})
+};
+
+(function(d, s, id) {
+let js, fjs = d.getElementsByTagName(s)[0]
+if (d.getElementById(id)) return
+js = d.createElement(s)
+js.id = id
+js.src = "//connect.facebook.net/{{ locale }}/sdk.js"
+fjs.parentNode.insertBefore(js, fjs)
+}(document, 'script', 'facebook-jssdk'))
+</script>
+{% endif %}
+{% if authorize != 1 %}
+<script>
+{% if resource == 'sign-in' and  resource == 'sign-up' %}
+$('#phone').focus()
+$('#phone').keyup(function(event) {if(event.keyCode==13) { $('#email').focus()}})
+$('#email').keyup(function(event) {if(event.keyCode==13) { $('#password').focus()}})
+$('#password').keyup(function(event) {if(event.keyCode==13) {login()}})
+{% endif %}
+</script>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ language_id }}">
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 - {{ config['title'] }} - {{ config['uri'] }}</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="keywords" content="404 - {{ config['title'] }}" />
+<meta name="description" content="404 - {{ config['title'] }}" />
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="/templates/{{ config['template'] }}/css/page.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body class="layout-centered"  style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<input type="hidden" name="csrf" id="csrf" value="{{ token }}">
+<header class="header h-fullscreen text-white bg-fixed bg-size-contain">
+<div class="container">
+<div class="row align-items-center h-100">
+<div class="col-md-8 mx-auto text-center">
+<a href="/"><img src="/img/logo.svg"></a>
+<br>
+<a href="/"><p class="lead fw-400">{{ config['h1'] }}</p></a>
+<h1 class="display-41" data-font="Raleway:800">404</h1>
+</div>
+</div>
+</div>
+</header>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

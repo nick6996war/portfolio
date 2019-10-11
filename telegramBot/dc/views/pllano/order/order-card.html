@@ -1,0 +1,109 @@
+<header id="home" class="header h-fullscreen" style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<canvas class="constellation" data-color="rgba(255,255,255,0.3)"></canvas>
+{% if user['club']['bank_name'] %}
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1 class="">{{ user['club']['bank_name'] }}</h1>
+<p class="mt-4 mb-7 lead">{{ language.968 }}</p>
+</div>
+</div>
+</div>
+{% else %}
+<div class="container">
+<div class="row align-items-center h-100">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1>{{ language.977 }}</h1>
+<p class="lead mt-4 mb-7">{{ language.75 }}</p>
+</div>
+<div class="col-md-5 ml-auto">
+<div class="col-md-12 col-xl-12 mx-auto input-border input-transparent">
+<div class="" id="pre-order">
+<div class="form">
+<div class="form-group">
+<input type="text" name="name" id="name" class="form-control form-control-md" placeholder="{{ language.103 }}" value="">
+<div class="text-danger" id="name-status"></div>
+</div>
+<div class="form-group">
+<input type="tel" name="phone" id="phone" class="form-control form-control-md" placeholder="{{ language.200 }}" value="">
+<div class="text-success"><small id="valid-msg" class="hide">✓ Ok</small></div>
+<div class="text-danger"><small id="error-msg" class="hide">{{ language.848 }}</small></div>
+<div class="text-danger" id="phone-status"></div>
+</div>
+<div class="form-group">
+<input type="email" name="email" id="email" class="form-control form-control-md" placeholder="{{ language.161 }}" value="">
+<div class="text-danger" id="email-status"></div>
+</div>
+<div class="form-group">
+<button class="btn btn-block btn-xl btn-primary" type="submit" onclick="orderCard()">{{ language.977 }}</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-5 mx-auto text-center">
+<img src="/img/pllano-platinum-visa-master.svg" alt="{{ language.962 }}">
+</div>
+</div>
+</div>
+{% endif %}
+</header>
+<main class="main-content">
+<section class="section py-7" style="background-color: #764ba2">
+<div class="container">
+<div class="row gap-y align-items-center">
+<div class="col-md-6">
+<h4 class="mb-0 text-white text-center text-md-left"><strong>{{ language.966 }}</strong></h4>
+</div>
+<div class="col-md-6 text-center text-md-right">
+<a class="btn btn-md btn-outline-success" href="/card-activation">{{ language.112 }}</a>
+</div>
+</div>
+</div>
+</section>
+<section id="section-features" class="section bg-gray">
+<div class="container">
+<header class="section-header">
+<h2><strong>{{ language.965 }}</strong></h2>
+<hr>
+<p class="lead">{{ language.967 }}</p>
+</header>
+
+<div class="row gap-y align-items-center">
+<div class="col-md-6 ml-auto">
+<h4><strong>{{ language.968 }}</strong></h4>
+<p>{{ language.969 }}</p>
+</div>
+<div class="col-md-5 order-md-first">
+<img class="rounded shadow-2" src="/img/card/pllano-marketplace.png" alt="{{ language.968 }}">
+</div>
+</div>
+
+<hr class="my-8">
+
+<div class="row gap-y align-items-center">
+<div class="col-md-6 mr-auto">
+<h4><strong>{{ language.972 }}</strong></h4>
+<p>{{ language.973 }}</p>
+</div>
+<div class="col-md-5">
+<img class="rounded shadow-2" src="/img/shopping/beautiful.jpg" alt="{{ language.972 }}">
+</div>
+</div>
+
+<hr class="my-8">
+
+<div class="row gap-y align-items-center">
+<div class="col-md-6 ml-auto">
+<h4><strong>{{ language.970 }}</strong></h4>
+<p>{{ language.971 }}</p>
+</div>
+<div class="col-md-5 order-md-first">
+<img class="rounded shadow-2" src="/img/card/pllano-club-20.png" alt="{{ language.970 }}">
+</div>
+</div>
+
+</div>
+</section>
+
+</main>

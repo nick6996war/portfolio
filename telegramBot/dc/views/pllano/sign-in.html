@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{ language_id }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{{ language.263 }} - {{ config['title'] }}</title>
+<meta name="description" content="{{ language.263 }} | {{ config['copyright']['text'] }}">
+<meta name="keyword" content="{{ language.263 }} | {{ config['copyright']['text'] }}">
+<link href="/templates/{{ content['template'] }}/css/page.min.css" rel="stylesheet">
+<link href="/templates/{{ content['template'] }}/css/style.min.css" rel="stylesheet">
+<link rel="icon" href="/favicon.ico">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body class="layout-centered"  style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<style>.hide {display: none !important;}</style>
+<input type="hidden" name="csrf" id="csrf" value="{{ token }}">
+<header class="text-center">
+<br>
+<a href="/"><img src="/img/logo.svg" alt="logo"></a>
+<br>
+<div class="btn-group">
+<button type="button" class="btn btn-md btn-hover-effects text-dark-gunmetal dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{% if language_id == "ua" %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% set locale = "uk_UA" %}
+{% elseif language_id == "en" %}
+<img src="/lib/phone/flags/gb.png" class="position-left" alt=""> English
+{% set locale = "en_US" %}
+{% elseif language_id == "ru" %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% set locale = "ru_RU" %}
+{% elseif language_id == "de" %}
+<img src="/lib/phone/flags/de.png" class="position-left" alt=""> Deutsch
+{% set locale = "de_DE" %}
+{% else %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% set locale = "en_US" %}
+{% endif %}
+</button>
+<div class="dropdown-menu a-dark-gunmetal a-hover-blue-violet">
+<a class="dropdown-item" href="#" onClick="setLanguage(2);"><img src="/lib/phone/flags/ua.png" alt=""> Українська</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(1);"><img src="/lib/phone/flags/ru.png" alt=""> Русский</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(3);"><img src="/lib/phone/flags/gb.png" alt=""> English</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(4);"><img src="/lib/phone/flags/de.png" alt=""> Deutsch</a>
+</div>
+</div>
+</header>
+<main class="main-content">
+<div class="bg-white rounded shadow-7 w-400 mw-100 p-6">
+<div class="text-center"><h5 class="mb-5">{{ language.263 }}</h5></div>
+<div class="form-group">
+<!--label class="text-uppercase">{{ language.200 }}</label-->
+<input type="tel" name="phone" id="phone" class="form-control" placeholder="">
+<div class="text-success-800"><span id="valid-msg" class="hide">✓ Ok</span></div>
+<div class="text-danger"><span id="error-msg" class="hide">{{ language.848 }}</span></div>
+<div class="text-danger" id="phone-status"></div>
+</div>
+<div class="form-group">
+<!--label class="text-uppercase">{{ language.161 }}</label-->
+<input type="email" name="email" id="email" class="form-control" placeholder="{{ language.161 }}">
+<div class="text-left-xl-lg-md text-red-md" id="email-status"></div>
+</div>
+<div class="form-group">
+<!--label class="text-uppercase">{{ language.201 }}</label-->
+<input type="password" name="password" id="password" class="form-control" placeholder="{{ language.272 }}">
+<div class="text-left-xl-lg-md text-red-md" id="password-status"></div>
+</div>
+<div class="form-group">
+<button class="btn btn-block btn-primary" type="submit" onClick="login();">{{ language.203 }}</button>
+</div>
+
+<div class="divider">{{ language.895 }}</div>
+<div class="text-center">
+<a class="btn btn-circle btn-sm btn-facebook mr-2" href="#" onclick="fb_auth();return false;"><i class="fa fa-facebook"></i></a>
+<a class="btn btn-circle btn-sm btn-google mr-2" href="#" onclick="google_auth();return false;"><i class="fa fa-google"></i></a>
+</div>
+<hr class="w-30">
+<p class="text-center text-muted small-2">{{ language.695 }} <a href="/sign-up">{{ language.283 }}</a></p>
+</div>
+</main>

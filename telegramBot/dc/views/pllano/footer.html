@@ -1,0 +1,58 @@
+{% if cookie_ok == 1 %}
+<div id="popup-cookie-3" class="popup text-white col-10 py-4 border-0" data-position="bottom-center" data-animation="slide-up" data-autoshow="2000">
+<div class="row gap-y align-items-center">
+<div class="col-md">
+This website uses cookies to ensure you get the best experience on our website. <a href="#">Lean more</a>
+</div>
+<div class="col-md-auto">
+<button class="btn btn-sm btn-outline-light" data-dismiss="popup">Got it</button>
+</div>
+</div>
+</div>
+{% endif %}
+<footer class="footer text-white py-7" style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<div class="container text-center">
+<div class="social social-lg social-bg-brand social-cycling">
+<a class="social-facebook" target="_blank" href="https://www.facebook.com/pllano.global/"><i class="fab fa-facebook"></i></a>
+<a class="social-instagram" target="_blank" href="https://www.instagram.com/pllano_com/"><i class="fab fa-instagram"></i></a>
+<a class="social-youtube" target="_blank" href="https://www.youtube.com/channel/UCYh4TREY-Igqp5ru7YLhV5w"><i class="fab fa-youtube"></i></a>
+<a class="social-twitter" target="_blank" href="https://twitter.com/pllano_com"><i class="fab fa-twitter"></i></a>
+</div>
+<br>
+<div class="col-md-12 text-center">
+<div class="btn-group">
+<button type="button" class="btn btn-md text-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{% if language_id == "ua" %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% elseif language_id == "en" %}
+<img src="/lib/phone/flags/gb.png" class="position-left" alt=""> English
+{% elseif language_id == "ru" %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% elseif language_id == "de" %}
+<img src="/lib/phone/flags/de.png" class="position-left" alt=""> Deutsch
+{% elseif language_id == "pl" %}
+<img src="/lib/phone/flags/pl.png" class="position-left" alt=""> Polski
+{% else %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% endif %}
+</button>
+<div class="dropdown-menu a-dark-gunmetal a-hover-blue-violet">
+<a class="dropdown-item" href="#" onClick="setLanguage(2);"><img src="/lib/phone/flags/ua.png" alt=""> Українська</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(1);"><img src="/lib/phone/flags/ru.png" alt=""> Русский</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(3);"><img src="/lib/phone/flags/gb.png" alt=""> English</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(4);"><img src="/lib/phone/flags/de.png" alt=""> Deutsch</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(5);"><img src="/lib/phone/flags/pl.png" alt=""> Polski</a>
+</div>
+</div>
+</div>
+<br>
+<div class="nav nav-bolder nav-center">
+<a class="nav-link" href="/for-partners">{{ language.963 }}</a>
+<!--a class="nav-link" href="/for-banks">{{ language.961 }}</a-->
+<a class="nav-link" href="/terms-of-use">{{ language.504 }}</a>
+<a class="nav-link" href="/privacy-policy">{{ language.406 }}</a>
+</div>
+<br>
+<small>Copyright &copy; {{ config['copyrights'] }} <a class="control-link link-white" href="{{ config['http_protocol'] }}://{{ config['uri'] }}">{{ config['copyright'] }}</a></small>
+</div>
+</footer>

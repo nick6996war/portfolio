@@ -1,0 +1,35 @@
+<main class="main-content">
+<section class="section bg-gray">
+<div class="container">
+<div class="col-lg-12">
+<table class="table table-cart">
+<tbody valign="middle">
+{% if items %}
+{% for key, value in items %}
+{% if value.product.name %}
+<tr>
+<td>
+<a href="#"><img class="rounded" src="{{ value.product.image }}" alt=""></a>
+</td>
+<td>
+<h5>{{ value.product.name }}</h5>
+<p>{{ language.880 }}: <a target="_blank" href="https://landing-forms.com/{{ value.alias }}">https://landing-forms.com/{{ value.alias }}</a></p>
+</td>
+<td><h4 class="price">$160</h4></td>
+<td>
+<a class="item-remove" href="#"><i class="ti-close"></i></a>
+</td>
+</tr>
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="col-md-12 text-center mt-3">
+<h2>{{ language.216 }}</h2>
+</div>
+{% endif %}
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>

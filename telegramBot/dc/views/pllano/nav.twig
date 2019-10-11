@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-light" data-navbar="smart">
+<div class="container">
+<div class="navbar-left mr-auto">
+<a class="navbar-brand" href="/">
+<img width="165px" class="logo-dark" src="/img/logo.svg" alt="{{ config['copyright'] }}">
+<img width="165px" class="logo-light" src="/img/logo.svg" alt="{{ config['copyright'] }}">
+</a>
+</div>
+<nav class="nav nav-navbar nav-text-normal mr-auto d-none d-md-flex">
+<a class="nav-link" href="/marketplace">Marketplace</a>
+<a class="nav-link" href="/club">Club</a>
+<a class="nav-link" href="/for-partners">{{ language.963 }}</a>
+<!--a class="nav-link" href="/for-banks">{{ language.961 }}</a-->
+</nav>
+{% if authorize == 1 %}
+<nav class="nav nav-inline nav-navbar">
+<a class="nav-link lead-2" href="#" data-toggle="offcanvas" data-target="#offcanvas-search"><i class="ti-search" aria-hidden="true"></i></a>
+<a class="nav-link lead-2" href="#" data-toggle="offcanvas" data-target="#offcanvas-user"><i class="fa fa-user" aria-hidden="true"></i></a>
+</nav>
+{% else %}
+<div class="mr-4">
+<a class="btn btn-xs btn-outline-danger" href="/sign-in">{{ language.203 }}</a>
+<!-- <a class="nav-link lead-2 social-facebook" href="#" onclick="fb_login();return false;"><i class="fab fa-facebook-f"></i></a>
+<a class="nav-link lead-2 social-google" href="#" id="google_1"><i class="fab fa-google"></i></a> -->
+</div>
+{% endif %}
+<nav class="nav nav-inline nav-navbar">
+<a class="nav-link lead-2" href="#" data-toggle="offcanvas" data-target="#offcanvas-menu">&#9776;</a>
+</nav>
+</div>
+</nav>
+{% if authorize == 1 %}
+<div id="offcanvas-user" class="offcanvas text-white w-300 px-7" data-animation="slide-left" style="background-color: rgba(0,0,0,0.95)">
+<button type="button" class="close position-static px-0" data-dismiss="offcanvas" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<nav class="nav nav-lead flex-column my-3">
+{% if user['club']['bank_name'] %}
+<div class="text-bold">{{ user['club']['bank_name'] }}</div>
+{% endif %}
+<div class="text-bold">{{ user['iname'] }} {{ user['fname'] }}</div>
+<div class="">{{ user['email'] }}</div>
+<div class="">{{ language.377 }}</div>
+<div class="">
+{% if user['bonus_code'] %}
+<a class="invite text-success" href="#" onclick="appCopyToClipBoard('invite','{{ config['http_protocol'] }}://{{config['uri'] }}/?invite={{ user['bonus_code'] }}', '{{ language.958 }}');">{{ config['http_protocol'] }}://{{config['uri'] }}/?invite={{ user['bonus_code'] }}</a>
+{% endif %}
+<!-- <a class="text-success" onclick="appCopyToClipBoard('{{ bonus_code }}');" href="{{ bonus_code }}">{{ bonus_code }}</a> -->
+</div>
+<button type="button" class="btn btn-outline-success btn-sm my-2" onclick="newOrder()">{{ language.114 }}</button>
+<br>
+<a class="btn btn-outline-primary btn-sm my-2" href="/suggestions"><i class="fa fa-at" aria-hidden="true"></i> {{ language.217 }}</a>
+<a class="btn btn-outline-info btn-sm my-2" href="/landings">{{ language.950 }}</a>
+<a class="btn btn-outline-success btn-sm my-2" href="/referral">{{ language.934 }}</a>
+<!--a class="btn btn-outline-warning btn-sm my-2" href="/settings">{{ language.709 }}</a-->
+<button type="button" class="btn btn-outline-danger btn-sm my-2" onClick="logout();">{{ language.318 }}</button>
+</nav>
+</div>
+{% endif %}
+<div id="offcanvas-menu" class="offcanvas text-white w-300 px-7" data-animation="slide-left" style="background-color: rgba(0,0,0,0.95)">
+<button type="button" class="close position-static px-0" data-dismiss="offcanvas" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<nav class="nav nav-lead flex-column my-7">
+<a class="nav-link" href="/marketplace">Marketplace</a>
+<a class="nav-link" href="/club">Club</a>
+<a class="nav-link" href="/for-partners">{{ language.963 }}</a>
+<!--a class="nav-link" href="/for-banks">{{ language.961 }}</a-->
+<a class="nav-link" href="/contact">{{ language.105 }}</a>
+</nav>
+<div class="social social-bg-dark">
+<a class="social-facebook" target="_blank" href="https://www.facebook.com/pllano.global/"><i class="fab fa-facebook-f"></i></a>
+<a class="social-instagram" target="_blank" href="https://www.instagram.com/pllano_com/"><i class="fab fa-instagram"></i></a>
+<a class="social-youtube" target="_blank" href="https://www.youtube.com/channel/UCYh4TREY-Igqp5ru7YLhV5w"><i class="fab fa-youtube"></i></a>
+<a class="social-twitter" target="_blank" href="https://twitter.com/pllano_com"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+<div id="offcanvas-search" class="offcanvas text-white" data-animation="fade" style="background-color: rgba(255,73,84,0.9)">
+<button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<div class="row align-items-center text-center h-90">
+<div class="col-10 col-md-6 mx-auto">
+<form class="input-transparent" method="get" action="/marketplace">
+<input class="form-control form-control-lg border-0 lead-5" value="{{ query }}" type="text" name="query" placeholder="{{ language.221 }}">
+</form>
+</div>
+</div>
+</div>

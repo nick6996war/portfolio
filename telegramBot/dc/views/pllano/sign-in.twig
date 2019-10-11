@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="{{ language_id }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{{ language.263 }} - {{ config['title'] }}</title>
+<meta name="description" content="{{ language.263 }} | {{ config['copyright']['text'] }}">
+<meta name="keyword" content="{{ language.263 }} | {{ config['copyright']['text'] }}">
+<link href="/templates/{{ content['template'] }}/css/page.min.css" rel="stylesheet">
+<link href="/templates/{{ content['template'] }}/css/style.min.css" rel="stylesheet">
+<link href="/lib/pnotify/3.2.0/css/pnotify.min.css" rel="stylesheet">
+<link href="/lib/phone/1.0.1/css/intlTelInput.css" rel="stylesheet">
+<link rel="icon" href="/favicon.ico">
+</head>
+<body class="layout-centered"  style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<style>.hide {display: none !important;}</style>
+<input type="hidden" name="csrf" id="csrf" value="{{ token }}">
+<header class="text-center">
+<br>
+<a href="/"><img src="/img/logo.svg" alt="logo"></a>
+<br>
+<div class="btn-group">
+<button type="button" class="btn btn-md btn-hover-effects text-dark-gunmetal dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{% if language_id == "ua" %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% set locale = "uk_UA" %}
+{% elseif language_id == "en" %}
+<img src="/lib/phone/flags/gb.png" class="position-left" alt=""> English
+{% set locale = "en_US" %}
+{% elseif language_id == "ru" %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% set locale = "ru_RU" %}
+{% elseif language_id == "de" %}
+<img src="/lib/phone/flags/de.png" class="position-left" alt=""> Deutsch
+{% set locale = "de_DE" %}
+{% else %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% set locale = "en_US" %}
+{% endif %}
+</button>
+<div class="dropdown-menu a-dark-gunmetal a-hover-blue-violet">
+<a class="dropdown-item" href="#" onClick="setLanguage(2);"><img src="/lib/phone/flags/ua.png" alt=""> Українська</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(1);"><img src="/lib/phone/flags/ru.png" alt=""> Русский</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(3);"><img src="/lib/phone/flags/gb.png" alt=""> English</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(4);"><img src="/lib/phone/flags/de.png" alt=""> Deutsch</a>
+</div>
+</div>
+</header>
+<main class="main-content">
+<div class="bg-white rounded shadow-7 w-400 mw-100 p-6">
+<div class="text-center"><h5 class="mb-5">{{ language.263 }}</h5></div>
+<div class="form-group">
+<label class="text-uppercase">{{ language.200 }}</label>
+<input type="tel" name="phone" id="phone" class="form-control" placeholder="">
+<div class="text-success-800"><span id="valid-msg" class="hide">✓ Ok</span></div>
+<div class="text-danger"><span id="error-msg" class="hide">{{ language.848 }}</span></div>
+<div class="text-danger" id="phone-status"></div>
+</div>
+<div class="form-group">
+<label class="text-uppercase">{{ language.161 }}</label>
+<input type="email" name="email" id="email" class="form-control" placeholder="{{ language.161 }}">
+<div class="text-left-xl-lg-md text-red-md" id="email-status"></div>
+</div>
+<div class="form-group">
+<label class="text-uppercase">{{ language.201 }}</label>
+<input type="password" name="password" id="password" class="form-control" placeholder="{{ language.272 }}">
+<div class="text-left-xl-lg-md text-red-md" id="password-status"></div>
+</div>
+<div class="form-group">
+<button class="btn btn-block btn-primary" type="submit" onClick="login();">{{ language.203 }}</button>
+</div>
+
+<div class="divider">{{ language.895 }}</div>
+<div class="text-center">
+<a class="btn btn-circle btn-sm btn-facebook mr-2" href="#" onclick="fb_login();return false;"><i class="fa fa-facebook"></i></a>
+<a class="btn btn-circle btn-sm btn-google mr-2" href="#" id="customBtn"><i class="fa fa-google"></i></a>
+</div>
+<hr class="w-30">
+<p class="text-center text-muted small-2">{{ language.695 }} <a href="/sign-up">{{ language.283 }}</a></p>
+</div>
+</main>
+<script src="/templates/{{ content['template'] }}/js/page.min.js"></script>
+<script src="/lib/pnotify/3.2.0/js/pnotify.min.js"></script>
+<script src="/lib/phone/1.0.1/js/intlTelInput.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/check.js"></script>
+<script>
+languages = getLanguages('{{ language_id }}')
+language = languages.language
+</script>
+{% if config['google']['oauth_id'] %}
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+var googleUser = {}
+var startApp = function() {
+gapi.load('auth2', function(){
+auth2 = gapi.auth2.init({
+client_id: "{{ config['google']['oauth_id'] }}",
+})
+attachSignin(document.getElementById('customBtn'))
+})
+}
+function attachSignin(element) {
+auth2.attachClickHandler(element, {},
+function(googleUser) {
+var csrf = $("#csrf").val()
+var token = googleUser.getAuthResponse().id_token
+var oauth = 'google'
+console.log('token: ' + token)
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function(data) {
+console.log('data: ' + data.status)
+if(data.status == "200") {
+if(data.location) {
+window.location.href = data.location
+} else {
+window.location.href = '/'
+}
+}
+})
+})
+}
+</script>
+<script>startApp();</script>
+{% endif %}
+{% if config['fb']['app_id'] %}
+<script>
+function fb_login() {
+FB.login(function(response) {
+if (response.authResponse) {	
+var csrf = $("#csrf").val()
+var token = response.authResponse.accessToken
+var oauth = 'facebook'
+console.log('token: ' + token)
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function (data)
+{
+console.log(data)
+if (data.status == "200") {
+if (data.location) {
+window.location.href = data.location
+} else {
+window.location.href = '/'
+}
+}
+})
+
+} else {
+console.log('User cancelled login or did not fully authorize.')
+}
+}, {scope: 'email'} )
+}
+
+window.fbAsyncInit = function() {
+FB.init({
+appId      : "{{ config['fb']['app_id'] }}",
+cookie     : true,  // enable cookies to allow the server to access
+xfbml      : true,  // parse social plugins on this page
+version    : "{{ config['fb']['graph_version'] }}" // use graph api version
+});
+};
+
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/{{ locale }}/sdk.js";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+{% endif %}
+<script>
+$(document).ready(function() {
+$('#phone').focus();
+$('#phone').keyup(function(event) {if(event.keyCode==13) { $('#email').focus(); }});
+$('#email').keyup(function(event) {if(event.keyCode==13) { $('#password').focus(); }});
+$('#password').keyup(function(event) {if(event.keyCode==13) {login();}});
+});
+
+var countryData = $.fn.intlTelInput.getCountryData();
+$.each(countryData, function(i, country) {
+country.name = country.name.replace(/.+\((.+)\)/,"$1");
+});
+
+var telInput = $("#phone"),
+errorMsg = $("#error-msg"),
+validMsg = $("#valid-msg");
+
+$("#phone").intlTelInput({
+initialCountry: "auto",
+geoIpLookup: function(callback) {
+$.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+var countryCode = (resp && resp.country) ? resp.country : "";
+callback(countryCode);
+});
+},
+autoFormat: true,
+autoPlaceholder: true,
+preferredCountries: ["ua", "by", "kz", "ge", "uz", "ru", "us"],
+separateDialCode: true,
+utilsScript: "/lib/phone/1.0.1/js/phone.js"
+});
+
+var reset = function() {
+telInput.removeClass("error");
+errorMsg.addClass("hide");
+validMsg.addClass("hide");
+};
+
+// on blur: validate
+telInput.blur(function() {
+reset();
+if ($.trim(telInput.val())) {
+if (telInput.intlTelInput("isValidNumber")) {
+validMsg.removeClass("hide");
+} else {
+telInput.addClass("error");
+errorMsg.removeClass("hide");
+}
+}
+});
+
+telInput.on("keyup change", reset);
+</script>
+
+</body>
+</html>

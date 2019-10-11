@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="{{ language_id }}">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% if content['title'] %}{% set title = content['title'] %}{% else %}{% set title = config['title'] %}{% endif %}
+<title>{{ title }}</title>
+{% if content['description'] %}{% set description = content['description'] %}{% else %}{% set description = config['description'] %}{% endif %}
+<meta name="description" content="{{ description }} - {{  config['uri'] }}">
+{% if content['keywords'] %}{% set keywords = content['keywords'] %}{% else %}{% set keywords = config['keywords'] %}{% endif %}
+<meta name="keywords" content="{{ keywords }}">
+{% if content['robots'] %}{% set robots = content['robots'] %}{% else %}{% set robots = config['robots'] %}{% endif %}
+<meta name="robots" content="{{ robots }}">
+{% if content['alias'] %}{% set alias = content['alias'] %}{% else %}{% set alias = "" %}{% endif %}
+<link name="canonical" content="{{ config['http_protocol'] }}://{{ config['uri'] }}{{ alias }}">
+<meta property="og:url" content="{{ config['http_protocol'] }}://{{ config['uri'] }}{{ alias }}">
+{% if language_id == "ua" %}
+<meta property="og:locale" content="uk_UA">
+{% elseif language_id == "ru" %}
+<meta property="og:locale" content="ru_RU">
+{% elseif language_id == "en" %}
+<meta property="og:locale" content="en_US">
+{% elseif language_id == "de" %}
+<meta property="og:locale" content="de_DE">
+{% else %}
+<meta property="og:locale" content="{{ config['og']['locale'] }}">
+{% endif %}
+{% if content['og']['title'] %}{% set og_title = content['og']['title'] %}{% else %}{% set og_title = config['og']['title'] %}{% endif %}
+<meta property="og:title" content="{{ og_title }}">
+{% if content['og']['description'] %}{% set og_description = content['og']['description'] %}{% else %}{% set og_description = config['og']['description'] %}{% endif %}
+<meta property="og:description" content="{{ og_description }}">
+{% if content['og']['image'] %}{% set og_image = content['og']['image'] %}{% else %}{% set og_image = config['og']['image'] %}{% endif %}
+<meta property="og:image" content="{{ config['http_protocol'] }}://{{ config['uri'] }}/{{ og_image }}">
+{% if config['fb']['app_id'] %}
+<meta property="fb:app_id" content="{{ config['fb']['app_id'] }}" />
+{% endif %}
+<input type="hidden" name="csrf" id="csrf" value="{{ token }}">
+<link rel="icon" href="{{ config['http_protocol'] }}://{{ config['uri'] }}/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ config['http_protocol'] }}://{{ config['uri'] }}/favicon.ico" type="image/x-icon" />
+<link href="/templates/{{ content['template'] }}/css/page.min.css" rel="stylesheet">
+<link href="/templates/{{ content['template'] }}/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<!-- <link href="https://cdn.joomimart.com/joomi-css/1.0.1/css/joomi-css.css" rel="stylesheet">
+<link href="https://cdn.joomimart.com/joomi-colors/1.0.2/css/joomi-colors.min.css" rel="stylesheet"> -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{% if config['google']['analytics']['async'] %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config['google']['analytics']['async'] }}"></script>
+{% endif %}
+</head>
+<body class="">
+{% if config['google']['analytics']['async'] %}
+<script>
+	window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag("js", new Date());
+gtag("config", "{{ config['google']['analytics']['async'] }}");
+</script>
+{% endif %}
+{% if content['edit'] == "1" %}
+<!-- Вы можете редактировать эту страницу -->
+<link href="/css/edit.css" rel="stylesheet">
+{% endif %}
+{% if config['fb']['pixel_id'] %}
+<meta property="fb:app_id" content="{{ config['fb']['pixel_id'] }}" />
+{% endif %}

@@ -1,0 +1,71 @@
+<header id="home" class="header h-fullscreen" style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<canvas class="constellation" data-color="rgba(255,255,255,0.3)"></canvas>
+{% if user['club']['bank_name'] %}
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1 class="">{{ user['club']['bank_name'] }}</h1>
+<p class="mt-4 mb-7 lead">{{ language.968 }}</p>
+</div>
+</div>
+</div>
+{% else %}
+<div class="container">
+<div class="row align-items-center h-100">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1>{{ language.112 }}</h1>
+</div>
+<div class="col-md-5 ml-auto">
+<div class="col-md-12 col-xl-12 mx-auto input-border input-transparent">
+<div class="" id="card_activation">
+<div class="form">
+<div class="form-group">
+<input type="text" name="card" id="card" class="form-control form-control-md" placeholder="{{ language.89 }}" value="">
+<div class="text-danger" id="card-status"></div>
+</div>
+<div class="form-group">
+<input type="text" name="iname" id="iname" class="form-control form-control-md" placeholder="{{ language.57 }}" value="">
+<div class="text-danger" id="iname-status"></div>
+</div>
+<div class="form-group">
+<input type="text" name="fname" id="fname" class="form-control form-control-md" placeholder="{{ language.58 }}" value="">
+<div class="text-danger" id="fname-status"></div>
+</div>
+<div class="form-group">
+<input type="tel" name="phone" id="phone" class="form-control form-control-md" placeholder="{{ language.200 }}" value="">
+<div class="text-success"><small id="valid-msg" class="hide">✓ Ok</small></div>
+<div class="text-danger"><small id="error-msg" class="hide">{{ language.848 }}</small></div>
+<div class="text-danger" id="phone-status"></div>
+</div>
+<div class="form-group">
+<input type="email" name="email" id="email" class="form-control form-control-md" placeholder="{{ language.161 }}" value="">
+<div class="text-danger" id="email-status"></div>
+</div>
+<div class="form-group">
+<button class="btn btn-block btn-xl btn-primary" type="submit" onclick="cardActivation()">{{ language.759 }}</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-5 mx-auto text-center">
+<img src="/img/pllano-platinum-visa-master.svg" alt="{{ language.962 }}">
+</div>
+</div>
+</div>
+{% endif %}
+</header>
+<main class="main-content">
+<section class="section py-7" style="background-color: #764ba2">
+<div class="container">
+<div class="row gap-y align-items-center">
+<div class="col-md-9">
+<h4 class="mb-0 text-white text-center text-md-left"><strong>{{ language.153 }}</strong></h4>
+</div>
+<div class="col-md-3 text-center text-md-right">
+<a class="btn btn-md btn-outline-primary" href="/order-card">{{ language.977 }}</a>
+</div>
+</div>
+</div>
+</section>
+</main>

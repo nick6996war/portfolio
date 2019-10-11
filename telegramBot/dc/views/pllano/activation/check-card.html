@@ -1,0 +1,39 @@
+<header id="home" class="header h-fullscreen" style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<canvas class="constellation" data-color="rgba(255,255,255,0.3)"></canvas>
+{% if user['club']['bank_name'] %}
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1 class="">{{ user['club']['bank_name'] }}</h1>
+<p class="mt-4 mb-7 lead">{{ language.968 }}</p>
+</div>
+</div>
+</div>
+{% else %}
+<div class="container">
+<div class="row align-items-center h-100">
+<div class="col-md-10 mx-auto text-center text-white">
+<h1>{{ language.72 }}</h1>
+</div>
+<div class="col-md-12 ml-auto">
+<div class="col-md-6 col-xl-6 mx-auto input-border input-transparent">
+<div class="" id="check_card">
+<div class="form">
+<div class="form-group">
+<input type="text" name="card" id="card" class="form-control form-control-md" placeholder="{{ language.89 }}" value="">
+<div class="text-danger" id="card-status"></div>
+</div>
+<div class="form-group">
+<button class="btn btn-block btn-xl btn-primary" type="submit" onclick="checkCard()">{{ language.72 }}</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-12 mx-auto text-center">
+<img src="/img/pllano-platinum-visa-master.svg" alt="{{ language.962 }}">
+</div>
+</div>
+</div>
+{% endif %}
+</header>

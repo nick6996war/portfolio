@@ -1,0 +1,134 @@
+<header class="header text-center text-white" style="background-color: #24292e;">
+<div class="container">
+<div class="row">
+<div class="col-md-8 mx-auto">
+<h1 class="display-4">{{ config.title }}</h1>
+<p class="lead-2 opacity-90 mt-1">{{ language.953 }}. {{ language.790 }}: {{ items.hits.total }}</p>
+<form class="input-glass" method="get" action="/marketplace">
+<div class="input-group">
+<div class="input-group-prepend">
+<span class="input-group-text"><i class="ti-search"></i></span>
+</div>
+<input type="text" name="query" class="form-control" value="{{ query }}" placeholder="{{ language.946 }}" autocomplete="off">
+<div class="input-group-append">
+<button class="btn btn-glass btn-light" type="submit">{{ language.945 }}</button>
+</div>
+</div>
+</form>
+{% if request_number == '5' %}
+<div class="text-center">
+<h5>{{ language.947 }}</h5>
+<p class="lead-2 opacity-90 mt-1">{{ language.948 }}</p>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+</header>
+<main class="main-content">
+<section class="section bg-gray">
+<div class="container">
+<div class="row gap-y">
+{% if request_number == '5' %}
+<div class="col-md-12 text-center">
+<h3>{{ language.949 }}</h2>
+</div>
+{% endif %}
+{% if items.hits.hits %}
+
+{% set testCart = 0 %}
+
+{% for key, value in items.hits.hits %}
+{% if value._id %}
+{% if value._source.images.0 %}
+{% if value._source.productAvailability == 'available' %}
+<div class="col-md-6 col-xl-4">
+<div class="product-1">
+<a href="#"><img src="{{ value._source.images.0 }}" alt="product"></a>
+<div class="product-detail">
+<div><a href="#">
+<h6>{{ value._source.productName }}</h6>
+<p>{{ value._source.productVendorName }}</p>
+</a></div>
+<div class="product-price">{{ value._source.productPriceLocal }} <span class="unit">{{ value._source.currencyId }}</span></div>
+</div>
+
+{% if user['club']['state'] == 1 %}
+<!-- Маркетплейс + Club -->
+
+<input type="hidden" name="price" id="price-{{value._id}}" value="{{ value._source.productPriceLocal }}">
+<input type="hidden" name="currency_id" id="currency_id-{{value._id}}" value="{{ value._source.currencyId }}">
+<input type="hidden" name="num" id="num-{{value._id}}" value="1">
+<div class="text-center" id="cart_button-{{value._id}}">
+
+{% set testCart = 0 %}
+
+{% if cart %}
+{% for val in cart %}
+{% if val.id == value._id %}
+{% set testCart = 1 %}
+<button type="button" class="btn btn-xs btn-label btn-secondary" onclick="cart('{{value._id}}', 'delete');"><label><i class="fa fa-cart-minus"></i></label> {{ language.5 }}</button>
+<button type="button" class="btn btn-xs btn-label btn-primary" onclick="cart('{{value._id}}', 'wishlist');"><label><i class="fa fa-star"></i></label> {{ language.952 }}</button>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if testCart == 0 %}
+<button type="button" class="btn btn-xs btn-label btn-success" onclick="cart('{{value._id}}', 'add');"><label><i class="fa fa-cart-plus"></i></label> {{ language.3 }}</button>
+<button type="button" class="btn btn-xs btn-label btn-primary" onclick="cart('{{value._id}}', 'wishlist');"><label><i class="fa fa-star"></i></label> {{ language.952 }}</button>
+{% endif %}
+
+</div>
+{% else %}
+
+<!-- Маркетплейс без подписки -->
+<div class="text-center" id="cart_button-{{value._id}}">
+<button type="button" class="btn btn-xs btn-label btn-success" onclick="cart('{{value._id}}', 'collection');"><label><i class="fa fa-star"></i></label> {{ language.952 }}</button>
+<button type="button" class="btn btn-xs btn-label btn-primary" onclick="cart('{{value._id}}', 'landing');"><label><i class="fa fa-paper-plane"></i></label> {{ language.957 }}</button>
+</div>
+
+{% endif %}
+
+<!--div class="text-center">
+<a class="page-link {{ value._id }}" href="#" onclick="appCopyToClipBoard('{{ value._id }}','{{ value._id }}','{{ language.958 }}');">
+_id: {{ value._id }}
+</a>
+</div-->
+
+</div>
+</div>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="col-md-12 text-center mt-3">
+<h2>{{ language.216 }}</h2>
+</div>
+{% endif %}
+
+</div>
+{% if pagination %}
+<nav class="mt-7">
+<ul class="pagination justify-content-center">
+<li class="page-item disabled">
+<a class="page-link" href="#">
+<span class="fa fa-angle-left"></span>
+</a>
+</li>
+<li class="page-item active">
+<a class="page-link" href="#">1</a>
+</li>
+<li class="page-item"><a class="page-link" href="#">2</a></li>
+<li class="page-item"><a class="page-link" href="#">3</a></li>
+<li class="page-item">
+<a class="page-link" href="#">
+<span class="fa fa-angle-right"></span>
+</a>
+</li>
+</ul>
+</nav>
+{% endif %}
+</div>
+</section>
+</main>

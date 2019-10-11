@@ -1,0 +1,235 @@
+{% if cookie_ok == 1 %}
+<div id="popup-cookie-3" class="popup text-white col-10 py-4 border-0" data-position="bottom-center" data-animation="slide-up" data-autoshow="2000">
+<div class="row gap-y align-items-center">
+<div class="col-md">
+This website uses cookies to ensure you get the best experience on our website. <a href="#">Lean more</a>
+</div>
+<div class="col-md-auto">
+<button class="btn btn-sm btn-outline-light" data-dismiss="popup">Got it</button>
+</div>
+</div>
+</div>
+{% endif %}
+{% if config['google']['api_key'] %}
+<script>
+$(function() {
+page.config({
+googleApiKey: '{{ config['google']['api_key'] }}', // https://developers.google.com/maps/documentation/javascript/get-api-key
+googleAnalyticsId: '{{ config['google']['analytics']['async'] }}',
+reCaptchaSiteKey:  '{{ config['re_captcha']['site_key'] }}', // See available languages: https://developers.google.com/recaptcha/docs/language
+reCaptchaLanguage: '{{ config['re_captcha']['language'] }}',
+disableAOSonMobile: true,
+smoothScroll: true,
+})
+})
+</script>
+{% endif %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<script>
+$('.slider').slick({
+dots: true,
+infinite: true,
+speed: 500,
+fade: true,
+cssEase: 'linear'
+});
+</script>
+
+<footer class="footer text-white py-7" style="background-image: linear-gradient(to bottom, #09203f 0%, #537895 100%);">
+<div class="container text-center">
+<div class="social social-lg social-bg-brand social-cycling">
+<a class="social-facebook" target="_blank" href="https://www.facebook.com/pllano.global/"><i class="fab fa-facebook"></i></a>
+<a class="social-instagram" target="_blank" href="https://www.instagram.com/pllano_com/"><i class="fab fa-instagram"></i></a>
+<a class="social-youtube" target="_blank" href="https://www.youtube.com/channel/UCYh4TREY-Igqp5ru7YLhV5w"><i class="fab fa-youtube"></i></a>
+<a class="social-twitter" target="_blank" href="https://twitter.com/pllano_com"><i class="fab fa-twitter"></i></a>
+</div>
+<br>
+<div class="col-md-12 text-center">
+<div class="btn-group">
+<button type="button" class="btn btn-md text-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+{% if language_id == "ua" %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% elseif language_id == "en" %}
+<img src="/lib/phone/flags/gb.png" class="position-left" alt=""> English
+{% elseif language_id == "ru" %}
+<img src="/lib/phone/flags/ru.png" class="position-left" alt=""> Русский
+{% elseif language_id == "de" %}
+<img src="/lib/phone/flags/de.png" class="position-left" alt=""> Deutsch
+{% elseif language_id == "pl" %}
+<img src="/lib/phone/flags/pl.png" class="position-left" alt=""> Polski
+{% else %}
+<img src="/lib/phone/flags/ua.png" class="position-left" alt=""> Українська
+{% endif %}
+</button>
+<div class="dropdown-menu a-dark-gunmetal a-hover-blue-violet">
+<a class="dropdown-item" href="#" onClick="setLanguage(2);"><img src="/lib/phone/flags/ua.png" alt=""> Українська</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(1);"><img src="/lib/phone/flags/ru.png" alt=""> Русский</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(3);"><img src="/lib/phone/flags/gb.png" alt=""> English</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(4);"><img src="/lib/phone/flags/de.png" alt=""> Deutsch</a>
+<a class="dropdown-item" href="#" onClick="setLanguage(5);"><img src="/lib/phone/flags/pl.png" alt=""> Polski</a>
+</div>
+</div>
+</div>
+<br>
+<div class="nav nav-bolder nav-center">
+<a class="nav-link" href="/for-partners">{{ language.963 }}</a>
+<!--a class="nav-link" href="/for-banks">{{ language.961 }}</a-->
+<a class="nav-link" href="/terms-of-use">{{ language.504 }}</a>
+<a class="nav-link" href="/privacy-policy">{{ language.406 }}</a>
+</div>
+<br>
+<small>Copyright &copy; {{ config['copyrights'] }} <a class="control-link link-white" href="{{ config['http_protocol'] }}://{{ config['uri'] }}">{{ config['copyright'] }}</a></small>
+</div>
+</footer>
+<input type="hidden" name="landing" id="landing" value="{{ content['alias'] }}">
+<!--script src="/lib/pnotify/3.2.0/js/pnotify.min.js"></script-->
+<script src="/templates/{{ content['template'] }}/js/page.min.js"></script>
+<script src="/js/notify.js"></script>
+<script src="/js/check.js"></script>
+<script src="/js/app.js"></script>
+<script>
+languages = getLanguages('{{ language_id }}')
+language = languages.language
+</script>
+
+{% if config['google']['analytics']['async'] %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config['google']['analytics']['async'] }}"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '{{ config['google']['analytics']['async'] }}');
+</script>
+{% endif %}
+
+{% if config['fb']['pixel_id'] %}
+<script>
+window.fbAsyncInit = function() {
+FB.init({
+appId      : '{{ config['fb']['pixel_id'] }}',
+xfbml      : true,
+version    : 'v2.9'
+});
+FB.AppEvents.logPageView();
+};
+(function(d, s, id){
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement(s); js.id = id;
+js.src = "https://connect.facebook.net/ru_RU/sdk.js";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+{% endif %}
+{% if authorize == 1 %}
+
+{% else %}
+
+{% if config['google']['oauth_id'] %}
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+var googleUser = {}
+var startApp = function() {
+gapi.load('auth2', function(){
+auth2 = gapi.auth2.init({
+client_id: '{{ config['google']['oauth_id'] }}',
+})
+attachSignin(document.getElementById('google_1'))
+attachSignin(document.getElementById('google_2'))
+attachSignin(document.getElementById('google_3'))
+attachSignin(document.getElementById('google_4'))
+})
+}
+function attachSignin(element) {
+auth2.attachClickHandler(element, {},
+function(googleUser) {
+var csrf = $("#csrf").val()
+var token = googleUser.getAuthResponse().id_token
+var oauth = 'google'
+//console.log('token: ' + token)
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function(data) {
+console.log('data: ' + data.status)
+if(data.status == 200) {
+if(data.location) {
+window.location.href = data.location
+} else {
+window.location.href = '/'
+}
+}
+})
+})
+}
+</script>
+<script>startApp();</script>
+<script>
+function fb_login() {
+FB.login(function(response) {
+if (response.authResponse) {
+var csrf = $("#csrf").val()
+var token = response.authResponse.accessToken
+var oauth = 'facebook'
+$.post("/login", {csrf: csrf, token: token, oauth: oauth}, function (data)
+{
+//console.log('data: ' + data.status)
+if (data.status == 200) {
+if (data.location) {
+window.location.href = data.location
+} else {
+window.location.href = '/'
+}
+}
+})
+} else {
+console.log('User cancelled login or did not fully authorize.')
+}
+}, {scope: 'email'} )
+}
+</script>
+{% endif %}
+{% endif %}
+
+{% if config['fb']['app_id'] %}
+<script>
+window.fbAsyncInit = function() {
+FB.init({
+appId      : '{{ config['fb']['app_id'] }}',
+cookie     : true,  // enable cookies to allow the server to access
+xfbml      : true,  // parse social plugins on this page
+version    : '{{ config['fb']['graph_version'] }}' // use graph api version
+});
+};
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/{{ locale }}/sdk.js";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<script>
+function appCopyToClipBoard(idText, sText, responseText)
+{
+var oText = false, bResult = false
+try {
+oText = document.createElement("textarea")
+$(oText).addClass('clipboardCopier').val(sText).insertAfter('body')
+oText.select()
+document.execCommand("Copy")
+bResult = true
+} catch(e) {}
+$(oText).remove()
+if (bResult) {
+text = responseText
+classText = 'success'
+} else {
+text = '{{ language.836 }}'
+classText = 'warn'
+}
+$('.'+idText).notify(text, {className: classText, position: 'bottom center', style: 'bootstrap', autoHide: true})
+}
+</script>
+
+{% endif %}
+
+</body>
+</html>

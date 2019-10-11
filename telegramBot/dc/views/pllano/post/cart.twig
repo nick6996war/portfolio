@@ -1,0 +1,9 @@
+{% if metod == "add" %}
+<button type="button" class="btn btn-xs btn-label btn-secondary" onclick="cart('{{data.id}}', 'delete');"><label><i class="fa fa-cart-minus"></i></label> {{ language.5 }}</button>
+<button type="button" class="btn btn-xs btn-label btn-primary" onclick="cart('{{data.id}}', 'wishlist');"><label><i class="fa fa-star"></i></label> {{ language.952 }}</button>
+{% elseif metod == "delete" %}
+<button type="button" class="btn btn-xs btn-label btn-success" onclick="cart('{{data.id}}', 'cart');"><label><i class="fa fa-cart-plus"></i></label> {{ language.3 }}</button>
+<button type="button" class="btn btn-xs btn-label btn-primary" onclick="cart('{{data.id}}', 'wishlist');"><label><i class="fa fa-star"></i></label> {{ language.952 }}</button>
+{% else %}
+<button type="button" class="btn btn-xs btn-label btn-success" onclick="cart('{{data.id}}', 'cart');"><label><i class="fa fa-cart-plus"></i></label> {{ language.3 }}</button>
+{% endif %}
