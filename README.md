@@ -9,3 +9,5 @@ second: by compiling the links earlier, download the page and parse it into tags
 
 # Pllano
 A prototype of a mobile application for pllano.com, which is likely to not be completed, due to customer failure.
+Developed on native react using expo.
+Simple multi-screen application with authorization and api interface for online store.
