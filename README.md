@@ -7,5 +7,5 @@ PRINCIPLE OF OPERATION
 first: with the "index" document we collect all the links to ads from all pages and write them to a file.   
 second: by compiling the links earlier, download the page and parse it into tags and get what we need, namely cadastral numbersnts written in NODE.JS.
 
-# pllano
+# Pllano
 A prototype of a mobile application for pllano.com, which is likely to not be completed, due to customer failure.
