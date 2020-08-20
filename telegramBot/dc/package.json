@@ -18,7 +18,7 @@
   "dependencies": {
     "JASON": "^0.1.3",
     "bagpipe": "^0.3.5",
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "binlookup": "^2.0.1",
     "body-parser": "^1.18.3",
     "child_process": "^1.0.2",
