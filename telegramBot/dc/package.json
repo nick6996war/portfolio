@@ -43,7 +43,7 @@
     "jsoff": "^1.1.0",
     "messenger-bot": "^2.5.0",
     "node-telegram-bot-api": "^0.30.0",
-    "nodemailer": "^5.1.1",
+    "nodemailer": "^6.4.16",
     "npm": "^6.8.0",
     "object-assign": "^4.1.1",
     "promise": "^8.0.2",
