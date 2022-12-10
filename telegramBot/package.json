@@ -22,7 +22,7 @@
     "claudia-bot-builder": "^4.5.0",
     "dateformat": "^3.0.3",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
     "http": "0.0.0",
